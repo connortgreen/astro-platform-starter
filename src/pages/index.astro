@@ -1,19 +1,98 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Markdown from '../components/Markdown.astro';
 
-const explainer = `
-An Astro website can go way beyond static pages - on the right platform.
-
-Netlify supports not only [Streaming SSR](https://docs.astro.build/en/guides/server-side-rendering/#html-streaming) and fast [Edge Middleware](https://docs.astro.build/en/guides/middleware/), but also [on-demand revalidation](https://www.netlify.com/blog/cache-tags-and-purge-api-on-netlify/) and [stale-while-revalidate](https://www.netlify.com/blog/swr-and-fine-grained-cache-control/). 
-Any page or data can be rebuilt only when needed, without site visitors ever getting a performance hit.
-`;
+const timeline = [
+    {
+        place: 'Cambridge, Massachusetts',
+        org: 'Harvard University',
+        body: 'Earned an S.B. in Mechanical Engineering and captained the ski team — the proving ground for the leadership, teamwork, and pursuit of excellence that carried into every project since.'
+    },
+    {
+        place: 'Lillehammer, Norway',
+        org: 'Madshus',
+        body: "Followed a love of outdoor sports and adventure to Norway's Olympic city, designing cross-country skis for one of the sport's oldest names."
+    },
+    {
+        place: 'Trondheim, Norway',
+        org: 'Sandvik Coromant',
+        body: 'Now designing custom machining solutions within the Silent Tools product line — drawn to problems that reward being complex and multifaceted.'
+    }
+];
 ---
 
-<Layout title="Welcome to Astro.">
-    <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
-    <Markdown content={explainer} class="mb-10 text-lg" />
-    <p>
-        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
-    </p>
+<Layout title="Connor Green — Mechanical Engineer" description="Connor Green is a mechanical engineer in Trondheim, Norway, designing custom machining solutions at Sandvik Coromant. Harvard S.B. Mechanical Engineering.">
+    <section class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
+        <div class="load-in order-2 flex flex-col justify-center lg:order-1 lg:col-span-7">
+            <p class="eyebrow mb-5">Mechanical Engineer · Trondheim, Norway</p>
+            <h1 class="mb-6 text-ink">Connor Green</h1>
+            <p class="mb-4 max-w-xl text-lg text-ink-soft">
+                I'm a mechanical engineer fueled by a passion for innovation and performance. My interests span beyond academia into product design, composite part
+                production, and the intricate realms of watchmaking and micromechanics.
+            </p>
+            <p class="mb-8 max-w-xl text-lg text-ink-soft">My motivation is solving problems of any kind — the more complex and multifaceted, the better.</p>
+            <div class="flex flex-wrap gap-4">
+                <a href="/projects" class="btn btn-lg">See the projects</a>
+                <a href="/contact" class="btn btn-outline btn-lg">Get in touch</a>
+            </div>
+        </div>
+
+        <div class="load-in order-1 lg:order-2 lg:col-span-5" style="animation-delay: 0.15s">
+            <div class="plate relative mx-auto aspect-square w-full max-w-[280px] sm:max-w-none">
+                <span class="plate-corner top-0 left-0 border-t border-l"></span>
+                <span class="plate-corner top-0 right-0 border-t border-r"></span>
+                <span class="plate-corner bottom-0 left-0 border-b border-l"></span>
+                <span class="plate-corner right-0 bottom-0 border-r border-b"></span>
+                <!-- Swap this monogram block for an <img src="/images/portrait.jpg" ... /> once a photo is ready -->
+                <div class="flex h-full flex-col items-center justify-center gap-3">
+                    <span class="font-display text-6xl text-ink/90">CTG</span>
+                    <span class="tag">Portrait pending</span>
+                </div>
+            </div>
+
+            <dl class="border-rule divide-rule mt-6 divide-y border-y">
+                <div class="flex justify-between gap-4 py-3">
+                    <dt class="font-mono text-xs tracking-[0.1em] text-ink-faint uppercase">Education</dt>
+                    <dd class="text-right text-sm text-ink-soft">S.B. Mechanical Engineering, Harvard</dd>
+                </div>
+                <div class="flex justify-between gap-4 py-3">
+                    <dt class="font-mono text-xs tracking-[0.1em] text-ink-faint uppercase">Based in</dt>
+                    <dd class="text-right text-sm text-ink-soft">Trondheim, Norway</dd>
+                </div>
+                <div class="flex justify-between gap-4 py-3">
+                    <dt class="font-mono text-xs tracking-[0.1em] text-ink-faint uppercase">Currently</dt>
+                    <dd class="text-right text-sm text-ink-soft">Design Engineer, Sandvik Coromant</dd>
+                </div>
+                <div class="flex justify-between gap-4 py-3">
+                    <dt class="font-mono text-xs tracking-[0.1em] text-ink-faint uppercase">Also into</dt>
+                    <dd class="text-right text-sm text-ink-soft">Watchmaking &amp; micromechanics</dd>
+                </div>
+            </dl>
+        </div>
+    </section>
+
+    <section class="mt-28 sm:mt-36">
+        <p class="eyebrow mb-3" data-reveal>Path so far</p>
+        <h2 class="reveal mb-12" data-reveal>From the ski hill to the machine shop</h2>
+
+        <div class="border-rule border-l">
+            {
+                timeline.map((entry, index) => (
+                    <div class="reveal relative py-8 pl-8 sm:pl-10" data-reveal style={`transition-delay: ${index * 0.08}s`}>
+                        <span class="absolute top-9 -left-[7px] h-3.5 w-3.5 rotate-45 border-2 border-primary bg-complementary" />
+                        <p class="font-mono text-xs tracking-[0.15em] text-primary uppercase">{entry.place}</p>
+                        <h3 class="mt-2 text-ink">{entry.org}</h3>
+                        <p class="mt-2 max-w-2xl text-ink-soft">{entry.body}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="mt-28 mb-16 sm:mt-36 sm:mb-24">
+        <blockquote class="reveal border-rule border-t pt-10" data-reveal>
+            <p class="font-display max-w-3xl text-2xl leading-snug text-ink italic sm:text-3xl">
+                "Solving problems of any kind — <span class="text-primary">the more complex and multifaceted, the better.</span>"
+            </p>
+        </blockquote>
+    </section>
 </Layout>

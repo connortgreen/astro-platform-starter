@@ -1,78 +1,120 @@
 @import 'tailwindcss';
 
 @theme {
-    --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-    --color-primary: #f67280;
-    --color-primary-content: #101828;
-    --color-complementary: #355c7d;
+    --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Fraunces', 'Iowan Old Style', ui-serif, serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+
+    --color-primary: #c99a53;
+    --color-primary-content: #1a160f;
+    --color-complementary: #1a160f;
+    --color-ink: #f2ece0;
+    --color-ink-soft: #b2a794;
+    --color-ink-faint: #746c5c;
+    --color-panel: #221d15;
+    --color-rule: #3a3225;
+
     --background-image-noise: linear-gradient(
             to bottom,
-            color-mix(in oklab, var(--color-gray-950) 0%, transparent),
-            color-mix(in oklab, var(--color-gray-950) 100%, transparent)
+            color-mix(in oklab, var(--color-gray-950) 10%, transparent),
+            color-mix(in oklab, var(--color-gray-950) 90%, transparent)
         ),
         url('/images/noise.png');
 }
 
 @layer base {
     h1 {
-        @apply text-4xl font-bold tracking-tight sm:text-5xl;
+        @apply font-display text-4xl leading-[1.05] font-semibold sm:text-6xl;
     }
 
     h2 {
-        @apply text-2xl font-bold sm:text-3xl;
+        @apply font-display text-2xl leading-tight font-semibold sm:text-3xl;
     }
 
-    a:not(.btn) {
-        @apply underline transition hover:opacity-80;
+    h3 {
+        @apply font-display text-xl leading-tight font-semibold;
     }
 
-    pre {
-        @apply p-6 overflow-x-auto rounded-lg;
+    a:not(.btn, .plain) {
+        @apply decoration-primary/50 underline underline-offset-4 transition hover:decoration-primary;
     }
 
-    :not(pre) > code {
-        @apply px-1 py-0.5 font-mono rounded bg-gray-900 text-primary;
-        font-size: 0.9em;
+    ::selection {
+        background: color-mix(in oklab, var(--color-primary) 35%, transparent);
     }
 }
 
 @layer components {
-    .markdown {
-        > * {
-            @apply my-6;
-        }
-
-        :where(h1, h2) {
-            @apply mt-12 mb-6;
-        }
-
-        > :first-child {
-            @apply mt-0;
-        }
-
-        > :last-child {
-            @apply mb-0;
-        }
+    .eyebrow {
+        @apply font-mono text-xs tracking-[0.2em] text-primary/90 uppercase;
     }
 
     .btn {
         @apply inline-flex items-center justify-center gap-2 bg-primary text-primary-content cursor-pointer text-center font-semibold no-underline transition-colors;
         padding: var(--btn-py, 0.875rem) var(--btn-px, 1.25rem);
         font-size: var(--btn-font-size, 0.875rem);
-        border-radius: var(--btn-border-radius, 0.25rem);
+        border-radius: var(--btn-border-radius, 0.125rem);
 
         &:hover {
             @apply bg-primary/85;
         }
+    }
 
-        &:disabled {
-            @apply text-gray-400 bg-gray-700;
-        }
+    .btn-outline {
+        @apply border-ink-faint/60 text-ink hover:border-primary hover:text-primary border bg-transparent;
     }
 
     .btn-lg {
-        --btn-font-size: 1.125rem;
+        --btn-font-size: 1rem;
         --btn-px: 1.5rem;
         --btn-py: 1.125rem;
     }
+
+    .plate {
+        @apply border-rule bg-panel/60 relative border;
+        background-image:
+            linear-gradient(90deg, color-mix(in oklab, var(--color-primary) 6%, transparent) 1px, transparent 1px),
+            linear-gradient(color-mix(in oklab, var(--color-primary) 6%, transparent) 1px, transparent 1px);
+        background-size: 16px 16px;
+    }
+
+    .plate-corner {
+        @apply border-primary/50 absolute h-2.5 w-2.5;
+    }
+
+    .reveal {
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+            opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .tab-panel[hidden] {
+        display: none;
+    }
+
+    .tag {
+        @apply border-rule text-ink-soft font-mono text-[0.65rem] tracking-[0.12em] uppercase border px-2 py-1;
+    }
+}
+
+@keyframes load-in {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.load-in {
+    animation: load-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
