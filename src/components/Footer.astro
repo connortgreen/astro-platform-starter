@@ -1,9 +1,10 @@
 ---
-
+const year = new Date().getFullYear();
 ---
 
-<footer class="pt-16 pb-12 sm:pt-24 sm:pb-16">
-    <p class="text-sm">
-        <a href="https://docs.netlify.com/frameworks/astro/" class="decoration-dashed text-primary underline-offset-8"> Astro on Netlify </a>
+<footer class="border-rule flex flex-wrap items-center justify-between gap-4 border-t py-10 sm:py-12">
+    <p class="text-ink-faint font-mono text-xs tracking-[0.1em] uppercase">© {year} Connor Green · Trondheim, Norway</p>
+    <p class="text-ink-faint font-mono text-xs tracking-[0.1em] uppercase">
+        <a href="/contact" class="plain hover:text-primary transition-colors">Get in touch →</a>
     </p>
 </footer>
