@@ -1,0 +1,101 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const tabs = [
+    {
+        id: 'composites',
+        label: 'Composite Manufacturing',
+        note: 'Layup schedules, mold design, and part production work will land here as pieces get documented.'
+    },
+    {
+        id: 'hobbies',
+        label: 'Hobbies',
+        sublabel: 'Woodcarving & Leatherworking',
+        note: 'Woodcarving and leatherworking projects — built between shifts at the machine shop — will be logged here.'
+    },
+    {
+        id: 'watchmaking',
+        label: 'Watchmaking',
+        note: 'Micromechanics and watchmaking builds are in progress. Movement teardowns and finished pieces will show up here.'
+    }
+];
+---
+
+<Layout title="Projects — Connor Green" description="Composite manufacturing, watchmaking, woodcarving, and leatherworking projects by Connor Green.">
+    <section class="load-in mb-14 sm:mb-20">
+        <p class="eyebrow mb-3">Outside the day job</p>
+        <h1 class="mb-4">Projects</h1>
+        <p class="max-w-xl text-lg text-ink-soft">A running log of things built by hand and by machine, sorted by discipline.</p>
+    </section>
+
+    <div role="tablist" aria-label="Project categories" class="border-rule mb-10 flex flex-wrap gap-x-8 gap-y-3 border-b">
+        {
+            tabs.map((tab, index) => (
+                <button
+                    type="button"
+                    role="tab"
+                    id={`tab-${tab.id}`}
+                    aria-controls={`panel-${tab.id}`}
+                    aria-selected={index === 0 ? 'true' : 'false'}
+                    tabindex={index === 0 ? 0 : -1}
+                    data-tab={tab.id}
+                    class:list={[
+                        'project-tab plain -mb-px border-b-2 pb-3 text-left font-mono text-xs tracking-[0.12em] uppercase transition-colors',
+                        index === 0 ? 'border-primary text-primary' : 'border-transparent text-ink-soft hover:text-ink'
+                    ]}
+                >
+                    {tab.label}
+                    {tab.sublabel && <span class="mt-0.5 block text-[0.6rem] tracking-normal normal-case opacity-70">{tab.sublabel}</span>}
+                </button>
+            ))
+        }
+    </div>
+
+    <div>
+        {
+            tabs.map((tab, index) => (
+                <div id={`panel-${tab.id}`} role="tabpanel" aria-labelledby={`tab-${tab.id}`} class="tab-panel" hidden={index !== 0}>
+                    <div class="plate flex flex-col items-start gap-4 p-8 sm:p-12">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" class="text-primary">
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="M12 7v5l3.5 2" />
+                        </svg>
+                        <h2 class="text-ink">Coming soon</h2>
+                        <p class="max-w-md text-ink-soft">{tab.note}</p>
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+
+    <script>
+        const tabButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+        const panels = new Map(Array.from(document.querySelectorAll<HTMLElement>('[role="tabpanel"]')).map((panel) => [panel.id, panel]));
+
+        function activate(tab: HTMLButtonElement) {
+            for (const button of tabButtons) {
+                const isActive = button === tab;
+                button.setAttribute('aria-selected', String(isActive));
+                button.tabIndex = isActive ? 0 : -1;
+                button.classList.toggle('border-primary', isActive);
+                button.classList.toggle('text-primary', isActive);
+                button.classList.toggle('border-transparent', !isActive);
+                button.classList.toggle('text-ink-soft', !isActive);
+
+                const panel = panels.get(`panel-${button.dataset.tab}`);
+                if (panel) panel.hidden = !isActive;
+            }
+            tab.focus();
+        }
+
+        tabButtons.forEach((button, index) => {
+            button.addEventListener('click', () => activate(button));
+            button.addEventListener('keydown', (event) => {
+                if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+                event.preventDefault();
+                const nextIndex = event.key === 'ArrowRight' ? (index + 1) % tabButtons.length : (index - 1 + tabButtons.length) % tabButtons.length;
+                activate(tabButtons[nextIndex]);
+            });
+        });
+    </script>
+</Layout>

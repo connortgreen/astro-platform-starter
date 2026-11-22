@@ -1,0 +1,87 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const channels = [
+    {
+        label: 'LinkedIn',
+        description: 'Career history and recommendations.',
+        icon: 'link',
+        href: 'https://www.linkedin.com/in/connor-green-519578b5',
+        action: 'View profile',
+        external: true
+    },
+    {
+        label: 'CV',
+        description: 'Full résumé as a downloadable PDF.',
+        icon: 'document'
+    },
+    {
+        label: 'Email',
+        description: 'For direct inquiries.',
+        icon: 'mail',
+        href: 'mailto:ConnorTGreen12@gmail.com',
+        action: 'ConnorTGreen12@gmail.com'
+    }
+];
+---
+
+<Layout title="Contact — Connor Green" description="Get in touch with Connor Green — LinkedIn, CV, and email links.">
+    <section class="load-in mb-14 sm:mb-20">
+        <p class="eyebrow mb-3">Reach out</p>
+        <h1 class="mb-4">Get in touch</h1>
+        <p class="max-w-xl text-lg text-ink-soft">
+            Whether it's about a role, a collaboration, or just curiosity after meeting me — reach out through LinkedIn or email.
+        </p>
+    </section>
+
+    <ul class="border-rule divide-rule divide-y border-y">
+        {
+            channels.map((channel) => (
+                <li class="flex flex-wrap items-center justify-between gap-4 py-6">
+                    <div class="flex items-center gap-4">
+                        <span class="border-rule flex h-11 w-11 shrink-0 items-center justify-center border text-primary">
+                            {channel.icon === 'link' && (
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M9 15l6-6" />
+                                    <path d="M11 6l1-1a4 4 0 015.5 5.5l-1 1" />
+                                    <path d="M13 18l-1 1a4 4 0 01-5.5-5.5l1-1" />
+                                </svg>
+                            )}
+                            {channel.icon === 'document' && (
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M7 3h7l4 4v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z" />
+                                    <path d="M14 3v4h4" />
+                                    <path d="M9 13h6M9 16h6" />
+                                </svg>
+                            )}
+                            {channel.icon === 'mail' && (
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1z" />
+                                    <path d="M3 6l9 7 9-7" />
+                                </svg>
+                            )}
+                        </span>
+                        <div>
+                            <p class="text-ink">{channel.label}</p>
+                            <p class="text-sm text-ink-soft">{channel.description}</p>
+                        </div>
+                    </div>
+                    {channel.href ? (
+                        <a
+                            href={channel.href}
+                            class="btn btn-outline break-all"
+                            {...(channel.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                        >
+                            {channel.action}
+                            <span aria-hidden="true">{channel.external ? '↗' : '→'}</span>
+                        </a>
+                    ) : (
+                        <span class="tag">Coming soon</span>
+                    )}
+                </li>
+            ))
+        }
+    </ul>
+
+    <p class="text-ink-faint mt-8 max-w-xl text-sm">A downloadable CV is on the way. Until then, email is the quickest way to request one.</p>
+</Layout>
