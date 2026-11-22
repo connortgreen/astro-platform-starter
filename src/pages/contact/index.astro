@@ -13,7 +13,10 @@ const channels = [
     {
         label: 'CV',
         description: 'Full résumé as a downloadable PDF.',
-        icon: 'document'
+        icon: 'document',
+        href: '/files/Connor-Green-CV.pdf',
+        action: 'View CV',
+        external: true
     },
     {
         label: 'Email',
@@ -30,7 +33,7 @@ const channels = [
         <p class="eyebrow mb-3">Reach out</p>
         <h1 class="mb-4">Get in touch</h1>
         <p class="max-w-xl text-lg text-ink-soft">
-            Whether it's about a role, a collaboration, or just curiosity after meeting me — reach out through LinkedIn or email.
+            Whether it's about a role, a collaboration, or just curiosity after meeting me — browse my CV or reach out through LinkedIn or email.
         </p>
     </section>
 
@@ -82,6 +85,4 @@ const channels = [
             ))
         }
     </ul>
-
-    <p class="text-ink-faint mt-8 max-w-xl text-sm">A downloadable CV is on the way. Until then, email is the quickest way to request one.</p>
 </Layout>
